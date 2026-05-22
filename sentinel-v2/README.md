@@ -4,10 +4,15 @@ A Python-based network traffic analyzer with real-time packet capture, threat de
 
 ## Features
 - **Live packet capture** via Scapy (TCP, UDP, ICMP, DNS)
-- **Threat detection** — port scan detection, traffic flood alerts, suspicious DNS
-- **GeoIP lookup** — maps source IPs to countries/cities
+- **Threat detection** — port scan detection, traffic flood alerts, suspicious DNS query flagging
+- **GeoIP lookup** — maps source IPs to countries and cities
 - **Streamlit dashboard** — live charts, protocol breakdown, alert panel
 - **Export** — CSV and JSON export from dashboard
+- **CLI interface** — capture, report, and data management from terminal
+
+## Requirements
+- Python 3.10+
+- [Npcap](https://npcap.com/#download) (Windows only) — install with **WinPcap API-compatible mode** checked
 
 ## Setup
 
@@ -15,24 +20,24 @@ A Python-based network traffic analyzer with real-time packet capture, threat de
 pip install -r requirements.txt
 ```
 
-> Requires root/admin privileges for packet capture.
-
 ## Usage
+
+> ⚠️ **Windows:** Run CMD or PowerShell as Administrator for packet capture.
 
 ```bash
 # Capture packets (default interface)
-sudo python main.py capture
+python main.py capture
 
 # Capture on specific interface, limit to 500 packets
-sudo python main.py capture eth0 500
+python main.py capture eth0 500
 
-# Print report in terminal
+# Print analysis report in terminal
 python main.py report
 
-# Launch web dashboard
+# Launch Streamlit dashboard
 python main.py dashboard
 
-# Clear all data
+# Clear all captured data
 python main.py clear
 ```
 
@@ -58,5 +63,9 @@ sentinel-v2/
 | Threat | Trigger |
 |---|---|
 | Port Scan | Single IP hits 15+ distinct ports |
-| Traffic Flood | 100+ packets from one IP in 10s |
-| Suspicious DNS | Domain name longer than 50 chars |
+| Traffic Flood | 100+ packets from one IP in 10 seconds |
+| Suspicious DNS | Domain name longer than 50 characters (possible DNS tunneling) |
+
+## Tech Stack
+
+`Python` `Scapy` `Streamlit` `Pandas` `Plotly` `Npcap`
